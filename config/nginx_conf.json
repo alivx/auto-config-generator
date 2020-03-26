@@ -1,33 +1,35 @@
 [
     {
-        "domain_name": "alivx.com",
+        "domain_name": "localhost",
         "isADefaultDomain": true,
         "ssl_certificate": "/etc/nginx/ssl/cert.pem",
         "ssl_certificate_key": "/etc/nginx/ssl/key.pem",
-        "access_log": "/var/log/nginx/$server_name.access.log",
-        "error_log": "/var/log/nginx/$server_name.error.log",
         "securityHeader": false,
+        "caching_path":"/var/www/html/",
         "backends": [
             {
                 "name": "api",
                 "host": "127.0.0.1",
                 "port": 8001,
-                "protocol": "https",
-                "urlLocation": "/"
+                "protocol": "http",
+                "urlLocation": "/",
+                "caching" : true
             },
             {
                 "name": "orders",
-                "host": "localhost",
+                "host": "127.0.0.1",
                 "port": 8002,
                 "protocol": "http",
-                "urlLocation": "/orders"
+                "urlLocation": "/orders",
+                "caching" : true
             },
             {
                 "name": "doc",
-                "host": "localhost",
+                "host": "127.0.0.1",
                 "port": 8003,
                 "protocol": "http",
-                "urlLocation": "/doc"
+                "urlLocation": "/doc",
+                "caching" : false
             }
         ]
     }
