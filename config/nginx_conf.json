@@ -1,0 +1,34 @@
+[
+    {
+        "domain_name": "alivx.com",
+        "isADefaultDomain": true,
+        "ssl_certificate": "/etc/nginx/ssl/cert.pem",
+        "ssl_certificate_key": "/etc/nginx/ssl/key.pem",
+        "access_log": "/var/log/nginx/$server_name.access.log",
+        "error_log": "/var/log/nginx/$server_name.error.log",
+        "securityHeader": false,
+        "backends": [
+            {
+                "name": "api",
+                "host": "127.0.0.1",
+                "port": 8001,
+                "protocol": "https",
+                "urlLocation": "/"
+            },
+            {
+                "name": "orders",
+                "host": "localhost",
+                "port": 8002,
+                "protocol": "http",
+                "urlLocation": "/orders"
+            },
+            {
+                "name": "doc",
+                "host": "localhost",
+                "port": 8003,
+                "protocol": "http",
+                "urlLocation": "/doc"
+            }
+        ]
+    }
+]
