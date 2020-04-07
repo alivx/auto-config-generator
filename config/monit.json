@@ -1,0 +1,85 @@
+[
+    {
+        "name": "apiServer1",
+        "hostIP": "localhost",
+        "checkIntervals": 60,
+        "startDelay": 50,
+        "monitLogFile": "/var/log/monit.log",
+        "monitPIDFile": "/var/run/monit.pid",
+        "monitIDPath": "/var/lib/monit/id",
+        "monitStatFile": "/var/lib/monit/state",
+        "includeExtraServiceConfig": "/etc/monit.d/*",
+        "eventqueue": {
+            "status": "active",
+            "eventPath": "/var/lib/monit",
+            "eventCount": 200
+        },
+        "emailServer": {
+            "host": "127.0.0.1",
+            "port": 25,
+            "emailFrom": "no-reply@example.com"
+        },
+        "mmonit": {
+            "status": "active",
+            "username": "monit",
+            "password": "monit",
+            "host": "localhost",
+            "port": 8080
+        },
+        "alertEmailList": {
+            "admin1": "ali@alivx.com"
+        },
+        "services": {
+            "nginx": {
+                "name": "nginx",
+                "process": {
+                    "pidFile": "/run/nginx.pid"
+                },
+                "cpu": {
+                    "status": "active",
+                    "usagesPresentage": 40,
+                    "checkCycle": 4,
+                    "action": "alert"
+                },
+                "memory": {
+                    "status": "active",
+                    "usagesPresentage": 40,
+                    "checkCycle": 4,
+                    "action": "alert"
+                },
+                "network": {
+                    "status": "active",
+                    "hostIP": "127.0.0.1",
+                    "port": 80,
+                    "checkCycle": 4,
+                    "action": "alert"
+                }
+            },
+            "mysql": {
+                "name": "mysql",
+                "process": {
+                    "pidFile": "/run/mysql.pid"
+                },
+                "cpu": {
+                    "status": "active",
+                    "usagesPresentage": 40,
+                    "checkCycle": 4,
+                    "action": "alert"
+                },
+                "memory": {
+                    "status": "active",
+                    "usagesPresentage": 40,
+                    "checkCycle": 4,
+                    "action": "alert"
+                },
+                "network": {
+                    "status": "active",
+                    "hostIP": "127.0.0.1",
+                    "port": 3306,
+                    "checkCycle": 4,
+                    "action": "alert"
+                }
+            }
+        }
+    }
+]

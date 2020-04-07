@@ -1,6 +1,6 @@
 [
     {
-        "domain_name": "localhost",
+        "name": "localhost",
         "isADefaultDomain": true,
         "ssl_certificate": "/etc/nginx/ssl/cert.pem",
         "ssl_certificate_key": "/etc/nginx/ssl/key.pem",

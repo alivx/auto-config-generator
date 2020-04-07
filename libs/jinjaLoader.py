@@ -17,7 +17,7 @@ def jinjaLoader(outputDir, configFile, templateFile):
     # Load json config file
     config_File = open(configFile)
     config_parameters = json.load(config_File)
-    domainName = "{0}.conf".format(config_parameters[0]['domain_name'])
+    serviceName = "{0}.conf".format(config_parameters[0]['name'])
 
     loader = jinja2.Environment(loader=jinja2.FileSystemLoader(
         searchpath="."), trim_blocks=True, lstrip_blocks=True)
@@ -31,7 +31,7 @@ def jinjaLoader(outputDir, configFile, templateFile):
     print("Create templates...")
     for config in config_parameters:
         result = tempFile.render(config)
-        f = open(os.path.join(output_dir, domainName), "w")
+        f = open(os.path.join(output_dir, serviceName), "w")
         f.write(result)
         f.close()
-        print("Output file: {0}".format(os.path.join(output_dir, domainName)))
+        print("Output file: {0}".format(os.path.join(output_dir, serviceName)))

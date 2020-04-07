@@ -1,0 +1,53 @@
+set daemon  {{checkIntervals}}
+   with start delay {{startDelay}}
+
+set logfile
+set log {{monitLogFile}}
+set pidfile {{monitPIDFile}}
+set idfile {{monitIDPath}}
+set statefile {{monitStatFile}}
+set mailserver 10.0.1.100
+
+{% if eventqueue.status == "active" %}
+set eventqueue
+    basedir {{eventqueue.eventPath}}
+    slots {{eventqueue.eventCount}}
+{% endif %}
+
+{% if mmonit.status == "active" %}
+set mmonit http://{{mmonit.username}}:{{mmonit.password}}@{{mmonit.host}}:{{mmonit.port}}/collector
+{% endif %}
+
+set mail-format {
+  from:    system@example.co
+  subject: {{name}} alert --  $EVENT $SERVICE
+  message: $EVENT Service $SERVICE
+                Event:       $EVENT
+                Service:     $SERVICE
+                Date:        $DATE
+                Action:      $ACTION
+                Description: $DESCRIPTION
+
+           Your faithful employee,
+           Sys admins
+}
+
+set alert {{alertEmailList.admin1}}
+
+set httpd port 2812 and
+    use address {{hostIP}}  # only accept connection from localhost
+    allow {{hostIP}}        # allow localhost to connect to the server and
+{% if mmonit.status == "active" %}
+    allow {{mmonit.host}}
+    allow {{mmonit.username}}:{{mmonit.password}}
+
+{% endif %}
+
+{% for service in services %}
+
+check process {{services[service].name}} with pidfile {{services[service].process.pidFile}}
+  if total cpu > {{services[service].cpu.usagesPresentage}}% for {{services[service].cpu.checkCycle}} cycles then {{services[service].cpu.action}}
+  if total memory > {{services[service].memory.usagesPresentage}}% for {{services[service].memory.checkCycle}} cycles then {{services[service].memory.action}}
+  if failed host  {{services[service].network.hostIP}} port {{services[service].network.port}} then {{services[service].network.action}}
+
+{% endfor %}
